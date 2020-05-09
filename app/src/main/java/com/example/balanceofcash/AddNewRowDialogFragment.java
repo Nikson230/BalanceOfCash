@@ -5,18 +5,16 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-
-import androidx.fragment.app.FragmentActivity;
+import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 
-public class AndroidFragment extends DialogFragment {
+public class AddNewRowDialogFragment extends DialogFragment {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog( Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = this.getLayoutInflater();
 
-        builder.setTitle("New");
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
         builder.setView(inflater.inflate(R.layout.dialog_add, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
@@ -26,16 +24,9 @@ public class AndroidFragment extends DialogFragment {
         }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                AddNewRowDialogFragment.this.getDialog().cancel();
             }
         });
         return builder.create();
-    }
-}
-
-class Fragment extends FragmentActivity {
-    public void confirmNew() {
-        DialogFragment newFragment = new AndroidFragment();
-        newFragment.show(getSupportFragmentManager(), "new");
     }
 }
