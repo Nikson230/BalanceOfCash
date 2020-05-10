@@ -12,15 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener, GetData {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Calendar;
+import java.util.Date;
+
+public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
     Button button;
 
-    public String[] data;
+    static String[] data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +48,24 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         newFragment.show(getSupportFragmentManager(), "new");
     }
 
-    @Override
-    public void get(AddNewRowDialogFragment dialogFragment, int ...id) {
+    public void get(AddNewRowDialogFragment dialogFragment, String[] data, int... id) {
         EditText[] editTexts = new EditText[id.length];
-        for(int x : id){
+        data = new String[2];
+        for (int x : id) {
             editTexts[x] = dialogFragment.getDialog().findViewById(x);
-            this.data[x] = editTexts[x].getText().toString();
+            data[x] = editTexts[x].getText().toString();
         }
+        LinearLayout linearLayout = findViewById(R.id.scrollLayout);
+
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.item, linearLayout, false);
+        TextView textViewTitle = view.findViewById(R.id.textTitle);
+        textViewTitle.setText(data[0]);
+        TextView textViewValue = view.findViewById(R.id.textValue);
+        textViewValue.setText(data[1]);
+        TextView textViewDate = view.findViewById(R.id.textDate);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy ' ' HH:mm:ss ");
+        textViewDate.setText(simpleDateFormat.format(new Date()));
+        linearLayout.addView(view);
     }
 }

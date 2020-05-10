@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.widget.EditText;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -19,7 +18,7 @@ public class AddNewRowDialogFragment extends DialogFragment {
         builder.setView(inflater.inflate(R.layout.dialog_add, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                new MainActivity().get(new AddNewRowDialogFragment(), MainActivity.data, R.id.editNumber, R.id.editTitle);
             }
         }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
