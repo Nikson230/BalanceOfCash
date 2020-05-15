@@ -13,10 +13,10 @@
         android:text="@string/edit_title" />
 
     <EditText
-        android:id="@+id/editNumber"
+        android:id="@+id/editValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
-        android:inputType="number"
-        android:autofillHints="" />
+        android:inputType="numberSigned|number" />
 </LinearLayout>

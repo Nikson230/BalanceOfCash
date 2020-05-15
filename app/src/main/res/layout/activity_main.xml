@@ -7,6 +7,12 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <TextView
+        android:id="@+id/textViewBalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/balance" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="602dp">

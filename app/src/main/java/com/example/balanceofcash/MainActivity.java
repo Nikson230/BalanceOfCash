@@ -1,8 +1,5 @@
 package com.example.balanceofcash;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,19 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Calendar;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  implements View.OnClickListener, AddNewRowDialogFragment.AddNewRowDialogListener {
 
     Button button;
 
-    static String[] data;
+    LinearLayout layout;
+
+    LayoutInflater inflater;
+
+    TextView textViewBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +32,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
 
         button = findViewById(R.id.buttonAdd);
+
+        layout = findViewById(R.id.scrollLayout);
+
+        textViewBalance = findViewById(R.id.textViewBalance);
 
         button.setOnClickListener(this);
     }
@@ -48,24 +48,20 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         newFragment.show(getSupportFragmentManager(), "new");
     }
 
-    public void get(AddNewRowDialogFragment dialogFragment, String[] data, int... id) {
-        EditText[] editTexts = new EditText[id.length];
-        data = new String[2];
-        for (int x : id) {
-            editTexts[x] = dialogFragment.getDialog().findViewById(x);
-            data[x] = editTexts[x].getText().toString();
-        }
-        LinearLayout linearLayout = findViewById(R.id.scrollLayout);
-
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.item, linearLayout, false);
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        EditText editTextTitle = dialog.getDialog().findViewById(R.id.editTitle);
+        EditText editTextValue = dialog.getDialog().findViewById(R.id.editValue);
+        inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.item, null, false);
         TextView textViewTitle = view.findViewById(R.id.textTitle);
-        textViewTitle.setText(data[0]);
         TextView textViewValue = view.findViewById(R.id.textValue);
-        textViewValue.setText(data[1]);
         TextView textViewDate = view.findViewById(R.id.textDate);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy ' ' HH:mm:ss ");
+        textViewTitle.setText(editTextTitle.getText().toString());
+        textViewValue.setText(editTextValue.getText().toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MM:yyyy ' ' HH:mm:ss");
         textViewDate.setText(simpleDateFormat.format(new Date()));
-        linearLayout.addView(view);
+        textViewBalance.setText("Balance - " + editTextValue.getText().toString());
+        layout.addView(view);
     }
 }
