@@ -58,10 +58,13 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         TextView textViewValue = view.findViewById(R.id.textValue);
         TextView textViewDate = view.findViewById(R.id.textDate);
         textViewTitle.setText(editTextTitle.getText().toString());
-        textViewValue.setText(editTextValue.getText().toString());
+        textViewValue.setText(editTextValue.getText().toString().isEmpty() ? "0" : editTextValue.getText().toString());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MM:yyyy ' ' HH:mm:ss");
         textViewDate.setText(simpleDateFormat.format(new Date()));
-        textViewBalance.setText("Balance - " + editTextValue.getText().toString());
+        double balance = textViewBalance.getText().toString().isEmpty() ? 0 : Double.valueOf(textViewBalance.getText().toString());
+        double value = editTextValue.getText().toString().isEmpty() ? 0 : Double.valueOf(textViewValue.getText().toString());
+        balance += value;
+        textViewBalance.setText(String.valueOf(balance));
         layout.addView(view);
     }
 }
